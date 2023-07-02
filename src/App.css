@@ -1,38 +1,208 @@
-.App {
-  text-align: center;
+*{
+  margin: 0%;
+  padding: 0%;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+main{
   min-height: 100vh;
+  max-width: 100%;
+  overflow-y: auto;
+}
+section{
+  margin-top: 4%;
+}
+
+.light{
+  background-color: #EAEAEA;
+
+}
+/* Darkmode */
+
+.navbar{
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  justify-content: space-between;
+  background-color: #3498DB;
+  padding: 5px 11%;
+}
+.dark .navbar{
+  background-color: #3498DB;
+}
+.navbar .title{
+  color: white;
+  font-weight: 700;
+  font-size: 1.3em;
+  margin: auto 0;
+}
+.navbar .light-mode, .dark-mode p{
+  margin: auto 0;
+  display: flex;
+  color: white;
+  /* font-size: 0.7em; */
+}
+.navbar .dark-mode p{
+  /* color: #EAEAEA; */
   color: white;
 }
-
-.App-link {
-  color: #61dafb;
+.switch input[type = "checkbox"]:checked + .slider{
+  background-color: red;
+}
+.dark .navbar .title{
+  color: #EAEAEA ;
+}
+form textarea{
+  width: 70%;
+  height: 4rem;
+  display: block;
+  margin: auto;
+  padding: 5px;
+  font-size: 20px;
+  border-radius: 5px;
+  border: 1px solid #bfbdbd;
+  outline: none;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.dark form textarea{
+  background-color: #ddd8d8;
+   
+}
+
+.modal{
+  margin: auto;
+  position: absolute;
+  top: 7.5%;
+  left: 0%;
+  right: 0%;
+  display: block;
+  text-align: center;
+  font-size: 1.1em;
+  font-weight: 350;
+  width: fit-content;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.modal p{
+  margin: 1rem;
+}
+.no_task{
+  color: rgb(194, 37, 37);
+}
+button{
+  margin: auto;
+  background-color: white;
+  margin-top: 2%;
+  color: #333333;
+  display: block;
+  padding: 10px 15px;
+  border-radius: 10px;
+  border: none;
+  font-size: 1.1em;
+  border: #333333;
+  border: 1px solid #bfbdbd;
+  font-weight: 500;
+  box-shadow: 0px 11px 40px 2px rgba(0, 0, 0, 0.12);
+}
+.intro{
+  text-align: center;
+  color: white;
+  color: #3498DB;
+  margin-bottom: 4px;
+}
+.tasks{
+  width: 80%;
+  display: grid;
+  margin: 5rem auto;
+  gap: 2rem;
+  margin-top: 2%;
+}
+
+.tasks .task{
+  background-color: white;
+  height: fit-content;
+  min-height: 100px;
+  padding: 20px;
+  margin-bottom: 1rem;
+  min-width: 40%;
+  position: relative;
+  border-radius: 8px;
+  box-shadow: 0px 11px 25px 2px rgba(0, 0, 0, 0.14);
+}
+.tasks .task .note{
+   display: block;
+   margin-bottom: 50px;
+}
+.dark .tasks .task{
+  background-color: #bfbdbd;
+}
+
+.tasks .task .buttons{
+  position: absolute;
+  display: flex;
+  bottom: 20px;
+  right: 20px;
+  /* margin: 10%; */
+}
+.tasks .task button{
+  background-color: rgb(237, 94, 94);
+  color: white;
+  font-size: 0.8em;
+  font-weight: 500;
+  border: none;
+}
+.tasks .task .Done{
+  background-color: #3498DB;
+  color: white;
+  margin-right: 5px ;
+}
+
+.date{
+  margin-top: 10px;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+}
+/* .tasks .task button::second */
+
+/* DARK MODE */
+.dark{
+  background-color: #333333;
+}
+
+.dark button{
+  color: #333333;
+}
+
+/* END OF DRAK MODE */
+
+@media  screen and (min-width: 760px) {
+  .tasks{
+    grid-template-columns: repeat(3, 1fr);
   }
-  to {
-    transform: rotate(360deg);
+  
+}
+@media  screen and (max-width: 900px) {
+  .tasks{
+    grid-template-columns: repeat(2, 1fr);
   }
+} 
+@media  screen and (max-width: 760px) {
+  .title{
+    font-size: 0.9em;
+    font-weight: 500;
+  }
+  .tasks{
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1rem;
+    margin-top: 10%;
+  }
+  
+  .tasks .task{
+    margin-bottom: 0.5rem;
+    text-align: center;
+    overflow-x: scroll;
+  }
+  
+  .navbar .light-mode, .dark-mode p{
+    font-size: 0.5em;
+  }
+  
 }
