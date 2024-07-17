@@ -1,16 +1,24 @@
-
 import React, { useReducer, useState, useEffect} from 'react'
 import './App.css';
 import Modal from './modal';
 import Navbar from './navbar';
 import { reducer } from './reducer';
 import { FiEdit } from 'react-icons/fi';
-import { FaTrashCan } from "react-icons/fa6";
-import {MdOutlineNightlight} from "react-icons/md"
+import { FaTrashCan} from "react-icons/fa6";
 
+
+const getNotesFromLocalStorage = ()=>{
+  const localNote = window.localStorage.getItem('NOTES')
+  if (localNote) {
+    return JSON.parse(window.localStorage.getItem('NOTES'))
+  }
+  else{
+    return []
+  }
+}
 
 const defaultState = {
-  tasks: [] ,
+  tasks: getNotesFromLocalStorage(),
   isModalOpen: false,
   modalContent: ' ',
   className: ' ',
@@ -20,24 +28,43 @@ const defaultState = {
 
 function App() {
   const [state,dispatch] = useReducer(reducer, defaultState)
-  const[ mode, setMode] = useState('light')
+  const[ theme, setTheme] = useState( 'light' )
 
- 
+  // getting theme from local storage
   useEffect(()=>{
-    localStorage.setItem('modeState', JSON.stringify(mode))
-  },[mode])
-
+    const data= window.localStorage.getItem('THEME')
+    console.log(data, );
+    if ( data !== null) {
+      setTheme(JSON.parse(data))
+    }
+  },[])
   
-
+  //  saving the theme to local storage
   useEffect(()=>{
-     const storedModeState = localStorage.getItem('modeState')
-     if(storedModeState){
-       setMode(JSON.parse(storedModeState))
-     }
-  }, [])
+    window.localStorage.setItem('THEME', JSON.stringify(theme))
+  }, [theme])
 
-  const changeMode =()=>{ 
-   setMode((curr)=>curr === 'light' ? 'dark':'light' ) 
+  //  getting notes from local state
+useEffect(()=>{
+  const Notes = window.localStorage.getItem('NOTES')
+  console.log(Notes);
+ 
+},[])
+
+ // saving the notes to local storage
+ useEffect(()=>{
+   window.localStorage.setItem('NOTES', JSON.stringify(state.tasks))
+ },[state.tasks])
+
+
+
+  const changeTheme =()=>{
+    if (theme === 'light') {
+setTheme('dark')
+    }
+    else{
+      setTheme('light')
+    }
   }
 
   const handleSubmit =(e)=>{
@@ -66,8 +93,8 @@ function App() {
   
   return (
    
-   <main className={mode}>  
-    <Navbar mode={changeMode} modeState={mode} />
+   <main className={theme}>  
+    <Navbar changeTheme={changeTheme} modeState={theme} />
     <section>
       <div className='modal'>
         {state.isModalOpen && <Modal modalContent={state.modalContent} closeModal={handleCloseModal} className={state.className}/>}
@@ -78,8 +105,8 @@ function App() {
           <div> 
           <textarea 
               type="text" 
-              value = {state.task  } 
               placeholder = "Input activity to be recorded"
+              value = {state.task  } 
               onChange={handleChange}
             />
 
@@ -91,7 +118,7 @@ function App() {
           {
             state.tasks.map((task)=>{
               return (
-                <div className='task'>
+                <div className='task' key={task.id}>
                   <p className='note'>{task.note}</p>
                   <div>
                     <p className='date'>{task.date}</p>

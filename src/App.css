@@ -21,7 +21,9 @@ section{
   display: flex;
   justify-content: space-between;
   background-color: #3498DB;
-  padding: 5px 11%;
+  height: 50px;
+  padding-left: 11%;
+  padding-right: 11%;
 }
 .dark .navbar{
   background-color: #3498DB;
@@ -68,7 +70,7 @@ form textarea{
 .modal{
   margin: auto;
   position: absolute;
-  top: 7.5%;
+  top: 55px;
   left: 0%;
   right: 0%;
   display: block;
