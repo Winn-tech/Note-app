@@ -7,8 +7,6 @@ export const reducer = (state, action) =>{
      return {...state, tasks:newTasks, isModalOpen: true, modalContent: 'Note added', className: 'add_task', task: ' ' };
    }
    if(action === 'CLEAR_TASK'){
-     console.log('CLEAR_TASK');
-     
       return{...state, task : ' ' }
    }
    
@@ -33,13 +31,8 @@ export const reducer = (state, action) =>{
    }  
 
    if (action.type === 'CHANGE_MODE') {
-    console.log('ADD_TASK');
       return{...state,  mode : !action.payload}
    }
-  if (action.type === 'LOAD_STATE'){
-
-  }
- 
    return state
  }
  

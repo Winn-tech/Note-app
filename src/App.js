@@ -5,6 +5,7 @@ import Navbar from './navbar';
 import { reducer } from './reducer';
 import { FiEdit } from 'react-icons/fi';
 import { FaTrashCan} from "react-icons/fa6";
+import Loader from './loader';
 
 
 const getNotesFromLocalStorage = ()=>{
@@ -28,28 +29,22 @@ const defaultState = {
 
 function App() {
   const [state,dispatch] = useReducer(reducer, defaultState)
-  const[ theme, setTheme] = useState( 'light' )
+  const [theme, setTheme] = useState(() => {
+    return window.localStorage.getItem("THEME") || "light"; 
+  });
+  const [loading, setLoading] = useState(true)
 
-  // getting theme from local storage
   useEffect(()=>{
-    const data= window.localStorage.getItem('THEME')
-    console.log(data, );
-    if ( data !== null) {
-      setTheme(JSON.parse(data))
-    }
+    setTimeout(()=>{
+      setLoading(false)
+    },3000) 
   },[])
+
   
   //  saving the theme to local storage
   useEffect(()=>{
-    window.localStorage.setItem('THEME', JSON.stringify(theme))
+    window.localStorage.setItem('THEME', theme)
   }, [theme])
-
-  //  getting notes from local state
-useEffect(()=>{
-  const Notes = window.localStorage.getItem('NOTES')
-  console.log(Notes);
- 
-},[])
 
  // saving the notes to local storage
  useEffect(()=>{
@@ -60,7 +55,7 @@ useEffect(()=>{
 
   const changeTheme =()=>{
     if (theme === 'light') {
-setTheme('dark')
+      setTheme('dark')
     }
     else{
       setTheme('light')
@@ -74,8 +69,7 @@ setTheme('dark')
     if(state.task !== ' '){
       const newTask = {id: new Date().getTime().toString(), note, date }
       dispatch({type:'ADD_TASK', payload:newTask})
-      dispatch({type:'CLEAR_TASK'})
-        
+      dispatch({type:'CLEAR_TASK'})  
       }
      
     else{
@@ -91,54 +85,72 @@ setTheme('dark')
     dispatch({type:'CLOSE_MODAL'})
   }
   
-  return (
+ if(loading){
+  return <Loader/>
+ }
+ return (
    
-   <main className={theme}>  
-    <Navbar changeTheme={changeTheme} modeState={theme} />
-    <section>
-      <div className='modal'>
-        {state.isModalOpen && <Modal modalContent={state.modalContent} closeModal={handleCloseModal} className={state.className}/>}
-      </div>
-      <div>
-          <p className='intro'>Input short note to be recorded</p>
-          <form onSubmit={handleSubmit}>
-          <div> 
-          <textarea 
-              type="text" 
-              placeholder = "Input activity to be recorded"
-              value = {state.task  } 
-              onChange={handleChange}
-            />
+  <main className={theme}>  
+   <Navbar changeTheme={changeTheme} modeState={theme} />
+   <section>
+     <div className='modal'>
+       {state.isModalOpen && <Modal modalContent={state.modalContent} closeModal={handleCloseModal} className={state.className}/>}
+     </div>
+     <div>
+         <p className='intro'>Input short note to be recorded</p>
+         <form onSubmit={handleSubmit}>
+         <div> 
+         <textarea 
+             type="text" 
+             placeholder = "Input activity to be recorded"
+             value = {state.task  } 
+             onChange={handleChange}
+           />
 
-            </div>
-              <button type='submit' >Add Note</button>
-          </form>
-      </div>
-      <div className='tasks'>
-          {
-            state.tasks.map((task)=>{
-              return (
-                <div className='task' key={task.id}>
-                  <p className='note'>{task.note}</p>
-                  <div>
-                    <p className='date'>{task.date}</p>
-                    
-                    <span className='buttons'>
-                      <button className='Done' onClick={()=> dispatch({type: 'EDIT', payload: task.id})}><FiEdit/></button>
-                      <button onClick={()=> dispatch({type: 'FILTER', payload: task.id})}><FaTrashCan/></button>
-                    </span>
-                    <p>  </p>
-                  </div>
-                </div>
-              )
-            })
-          }
-      </div>
-    </section>
-    
-      
-   </main>
-  );
+           </div>
+             <button 
+                type='submit' 
+                className='submit' 
+              >
+                {defaultState.isEditNote ? 'Edit Note' : 'Add Note'}
+              </button>
+         </form>
+     </div>
+     <div className='tasks'>
+         {
+           state.tasks.map((task)=>{
+             return (
+               <div className='task' key={task.id}>
+                 <p className='note'>{task.note}</p>
+                 <div>
+                   <p className='date'>{task.date}</p>
+                   
+                   <span className='buttons'>
+                     <button className='Done' 
+                     onClick={()=> {
+                      dispatch({type: 'EDIT', payload: task.id})
+                      dispatch({type: 'CLOSE_EDIT'})
+                     }}>
+                      <FiEdit/>
+                      </button>
+                     <button 
+                      onClick={
+                        ()=> dispatch({type: 'FILTER', payload: task.id})}>
+                        <FaTrashCan/>
+                      </button>
+                   </span>
+                   <p>  </p>
+                 </div>
+               </div>
+             )
+           })
+         }
+     </div>
+   </section>
+   
+     
+  </main>
+ );
 }
 
 export default App;

@@ -1,6 +1,7 @@
 *{
   margin: 0%;
   padding: 0%;
+  font-family: inter;
 }
 main{
   min-height: 100vh;
@@ -12,41 +13,44 @@ section{
 }
 
 .light{
-  background-color: #EAEAEA;
-
+  background-color: #ECEFF1;
 }
-/* Darkmode */
 
-.navbar{
-  display: flex;
-  justify-content: space-between;
-  background-color: #3498DB;
-  height: 50px;
-  padding-left: 11%;
-  padding-right: 11%;
-}
 .dark .navbar{
   background-color: #3498DB;
 }
+
+.navbar{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #1E88E5;
+  height: 60px;
+  padding: 0 5%;
+  position: sticky;
+  top: 0px;
+}
+
 .navbar .title{
   color: white;
   font-weight: 700;
   font-size: 1.3em;
   margin: auto 0;
 }
+.navbar .theme-icon{
+  color: white;
+  font-size: 25px;
+  cursor: pointer;
+}
 .navbar .light-mode, .dark-mode p{
   margin: auto 0;
   display: flex;
   color: white;
-  /* font-size: 0.7em; */
 }
 .navbar .dark-mode p{
-  /* color: #EAEAEA; */
   color: white;
 }
-.switch input[type = "checkbox"]:checked + .slider{
-  background-color: red;
-}
+
 .dark .navbar .title{
   color: #EAEAEA ;
 }
@@ -64,13 +68,12 @@ form textarea{
 
 .dark form textarea{
   background-color: #ddd8d8;
-   
 }
 
 .modal{
   margin: auto;
   position: absolute;
-  top: 55px;
+  top: 60px;
   left: 0%;
   right: 0%;
   display: block;
@@ -98,10 +101,19 @@ button{
   border-radius: 10px;
   border: none;
   font-size: 1.1em;
-  border: #333333;
   border: 1px solid #bfbdbd;
-  font-weight: 500;
-  box-shadow: 0px 11px 40px 2px rgba(0, 0, 0, 0.12);
+  font-weight: 700;
+  transition-property: transform;
+  transition-duration: 0.5s;
+  transition-timing-function: ease-in-out;
+
+}
+button:hover{
+  transform: scaleX(1.1);
+}
+.submit{
+  box-shadow: 5px 5px 4px #1E88E5;
+  cursor: pointer;
 }
 .intro{
   text-align: center;
@@ -110,7 +122,7 @@ button{
   margin-bottom: 4px;
 }
 .tasks{
-  width: 80%;
+  width: 90%;
   display: grid;
   margin: 5rem auto;
   gap: 2rem;
@@ -122,18 +134,24 @@ button{
   height: fit-content;
   min-height: 100px;
   padding: 20px;
-  margin-bottom: 1rem;
   min-width: 40%;
   position: relative;
   border-radius: 8px;
   box-shadow: 0px 11px 25px 2px rgba(0, 0, 0, 0.14);
+  transition-property: transform;
+  transition-duration: 0.9s;
+  transition-timing-function: ease-in-out;
+}
+.tasks .task:hover{
+  transform: translateY(-5px);
+  cursor: pointer;
 }
 .tasks .task .note{
    display: block;
    margin-bottom: 50px;
 }
 .dark .tasks .task{
-  background-color: #bfbdbd;
+  background-color: #bfbdbd; 
 }
 
 .tasks .task .buttons{
@@ -141,7 +159,6 @@ button{
   display: flex;
   bottom: 20px;
   right: 20px;
-  /* margin: 10%; */
 }
 .tasks .task button{
   background-color: rgb(237, 94, 94);
@@ -149,28 +166,41 @@ button{
   font-size: 0.8em;
   font-weight: 500;
   border: none;
+  
 }
 .tasks .task .Done{
   background-color: #3498DB;
   color: white;
   margin-right: 5px ;
 }
-
+.tasks .task button:hover{
+  opacity: 0.9;
+}
 .date{
   margin-top: 10px;
   position: absolute;
   bottom: 20px;
+  font-size: 14px;
+  opacity: 0.6;
   left: 20px;
 }
 /* .tasks .task button::second */
 
 /* DARK MODE */
 .dark{
-  background-color: #333333;
+  /* background-color: #333333; */
+  background-color: #121212;
 }
 
 .dark button{
   color: #333333;
+}
+
+.loader{
+  background-color: #1E88E5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* END OF DRAK MODE */
